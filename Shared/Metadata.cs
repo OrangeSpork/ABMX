@@ -30,5 +30,7 @@
 
         public const string AdvTransparencyName = "Make advanced window transparent";
         public const string AdvTransparencyDesc = "If false, the window has a solid background, else it's see-through";
+        public const string OverrideNoPositionsName = "Allow Position Edits to No Rotation Bones";
+        public const string OverrideNoPositionsDesc = "If true, allows Position edits to certain bones that don't allow rotation changes";
     }
 }

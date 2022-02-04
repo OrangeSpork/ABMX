@@ -28,6 +28,7 @@ namespace KKABMX.Core
         internal static ConfigEntry<bool> XyzMode { get; private set; }
         internal static ConfigEntry<bool> RaiseLimits { get; private set; }
         internal static ConfigEntry<bool> TransparentAdvancedWindow { get; private set; }
+        internal static ConfigEntry<bool> OverrideNoPositions { get; private set; }
 
         internal static KKABMX_Core Instance { get; private set; }
         internal static new ManualLogSource Logger { get; private set; }
@@ -43,6 +44,7 @@ namespace KKABMX.Core
             XyzMode = Config.Bind("Maker", Metadata.XyzModeName, false, Metadata.XyzModeDesc);
             RaiseLimits = Config.Bind("Maker", Metadata.RaiseLimitsName, false, Metadata.RaiseLimitsDesc);
             TransparentAdvancedWindow = Config.Bind("General", Metadata.AdvTransparencyName, false, Metadata.AdvTransparencyDesc);
+            OverrideNoPositions = Config.Bind("Maker", Metadata.OverrideNoPositionsName, false, Metadata.OverrideNoPositionsDesc);
             _openEditorKey = Config.Bind("General", "Open bonemod editor", KeyboardShortcut.Empty, "Opens advanced bonemod window if there is a character that can be edited.");
 
 #if !EC

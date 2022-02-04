@@ -24,6 +24,20 @@ namespace KKABMX.Core
                         controller.NeedsBaselineUpdate = true;
                 }
             }
+
+            [HarmonyPrefix]
+            [HarmonyPatch(typeof(ChaControl), nameof(ChaControl.ChangeHeadAsync), new System.Type[] { typeof(int), typeof(bool), typeof(bool) })]
+            public static void ChangeHeadPre(ChaControl __instance)
+            {
+                if (__instance)
+                {
+                    var controller = __instance.GetComponent<BoneController>();
+                    if (controller)
+                    {
+                        controller.HeadReset();
+                    }
+                }
+            }
         }
     }
 }

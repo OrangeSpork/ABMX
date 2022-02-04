@@ -341,7 +341,7 @@ namespace KKABMX.GUI
                 }
                 GUILayout.EndHorizontal();
 
-                if (!KKABMX_Core.NoRotationBones.Contains(mod.BoneName))
+                if (!KKABMX_Core.NoRotationBones.Contains(mod.BoneName) || KKABMX_Core.OverrideNoPositions.Value)
                 {
                     GUILayout.BeginHorizontal(_gloExpand);
                     {
@@ -366,28 +366,31 @@ namespace KKABMX.GUI
                     }
                     GUILayout.EndHorizontal();
 
-                    GUILayout.BeginHorizontal(_gloExpand);
+                    if (!KKABMX_Core.NoRotationBones.Contains(mod.BoneName))
                     {
-                        // Rotation sliders
-                        var rotation = modData.RotationModifier;
-                        UnityEngine.GUI.changed = false;
-
-                        GUILayout.Label("Tilt", _gloExpand);
-
-                        DrawSingleSlider("X:", ref rotation.x, -180, 180);
-                        DrawSingleSlider("Y:", ref rotation.y, -180, 180);
-                        DrawSingleSlider("Z:", ref rotation.z, -180, 180);
-
-                        if (GUILayout.Button("0", _gsButtonReset, _gloSmallButtonWidth, _gloHeight)) rotation = Vector3.zero;
-
-                        if (UnityEngine.GUI.changed)
+                        GUILayout.BeginHorizontal(_gloExpand);
                         {
-                            modData.RotationModifier = rotation;
-                            if (linkedModData != null) linkedModData.RotationModifier = new Vector3(rotation.x, rotation.y * -1, rotation.z * -1);
-                            anyChanged = true;
+                            // Rotation sliders
+                            var rotation = modData.RotationModifier;
+                            UnityEngine.GUI.changed = false;
+
+                            GUILayout.Label("Tilt", _gloExpand);
+
+                            DrawSingleSlider("X:", ref rotation.x, -180, 180);
+                            DrawSingleSlider("Y:", ref rotation.y, -180, 180);
+                            DrawSingleSlider("Z:", ref rotation.z, -180, 180);
+
+                            if (GUILayout.Button("0", _gsButtonReset, _gloSmallButtonWidth, _gloHeight)) rotation = Vector3.zero;
+
+                            if (UnityEngine.GUI.changed)
+                            {
+                                modData.RotationModifier = rotation;
+                                if (linkedModData != null) linkedModData.RotationModifier = new Vector3(rotation.x, rotation.y * -1, rotation.z * -1);
+                                anyChanged = true;
+                            }
                         }
+                        GUILayout.EndHorizontal();
                     }
-                    GUILayout.EndHorizontal();
                 }
             }
             GUILayout.EndVertical();

@@ -142,11 +142,6 @@ namespace KKABMX.Core
                             );
                             _changedPosition = true;
                         }
-                        else if (_changedPosition)
-                        {
-                            BoneTransform.localPosition = _posBaseline;
-                            _changedPosition = false;
-                        }
 
                         return;
                     }

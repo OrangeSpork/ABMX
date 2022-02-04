@@ -235,13 +235,7 @@ namespace KKABMX.Core
                 }
                 else
                 {
-#if AI || HS2
-                    var headRoot = transform.FindLoop("cf_J_Head");
-#else
-                    var headRoot = transform.FindLoop("cf_j_head");
-#endif
-                    var headBones = new HashSet<string>(headRoot.GetComponentsInChildren<Transform>().Select(x => x.name));
-                    headBones.Add(headRoot.name);
+                    var headBones = GetHeadBones();
                     if (GUI.KKABMX_GUI.LoadFace)
                     {
                         Modifiers.RemoveAll(x => headBones.Contains(x.BoneName));
@@ -258,6 +252,18 @@ namespace KKABMX.Core
             }
 
             StartCoroutine(OnDataChangedCo());
+        }
+
+        internal HashSet<string> GetHeadBones()
+        {
+#if AI || HS2
+            var headRoot = transform.FindLoop("cf_J_Head");
+#else
+                    var headRoot = transform.FindLoop("cf_j_head");
+#endif
+            var headBones = new HashSet<string>(headRoot.GetComponentsInChildren<Transform>().Select(x => x.name));
+            headBones.Add(headRoot.name);
+            return headBones;
         }
 
         internal static List<BoneModifier> ReadModifiers(PluginData data)
@@ -526,6 +532,13 @@ namespace KKABMX.Core
                 modifier.Reset();
                 Modifiers.Remove(modifier);
             }
+        }
+
+        internal void HeadReset()
+        {
+            var headBones = GetHeadBones();
+            Modifiers.FindAll(x => headBones.Contains(x.BoneName)).ForEach(x => x.Reset());
+            Modifiers.RemoveAll(x => headBones.Contains(x.BoneName));
         }
 
         /// <summary>
